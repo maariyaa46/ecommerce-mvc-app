@@ -1,0 +1,21 @@
+﻿@model FinalProject.Models.Product
+
+
+<div class="box-img-hover">
+
+    <img src="@Url.Content(Model.path)" alt="" class="img-fluid img-thumbnail">
+    <div class="mask-icon">
+        <ul>
+            <li><a href="@Url.Action("ViewDetails", "Product1", new { id = Model.id })" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+
+            <li><a href="@(Session["user"]!=null ? Url.Action("WishList","Product1", new {id=@Model.id }) :Url.Action("Login","User"))" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+        </ul>
+        <a class="cart" href="@(Session["user"] != null ? Url.Action("AddToCart", "Product1", new { id = @Model.id}) : Url.Action("Login", "User"))">Add to Cart</a>
+    </div>
+</div>
+<div class="why-text">
+    <h4 class="aa-product-title"><a href="#">@Model.name</a></h4>
+    <h5>@Model.price
+
+</h5>
+</div>

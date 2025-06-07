@@ -1,0 +1,17 @@
+﻿@if (@ViewBag.cartBox != null)
+{
+
+    foreach (var item in @ViewBag.cartBox)
+    {
+
+        <li>
+            <a href="#" class="photo"><img src="@Url.Content(item.Product.path)" class="cart-thumb" alt="" /></a>
+            <h6><a href="#">@item.Product.name </a></h6>
+            <p>@item.quantity x @item.total</p>
+        </li>
+        }
+            }
+<li class="total">
+    <a href="@Url.Action("Index","Cart")" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+    <span class="float-right"><strong>Total</strong>: @ViewBag.Total</span>
+</li>

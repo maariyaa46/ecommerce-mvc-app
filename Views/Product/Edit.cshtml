@@ -1,0 +1,84 @@
+﻿@model FinalProject.Models.ProductVM
+@{
+    ViewBag.Title = "Edit Product details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.id)
+    @Html.HiddenFor(x => x.path)
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Register Product</h1>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+
+
+                                <div class="card-header">
+                                    <button type="button" class="btn float-right btn-info shiny" onclick="window.location='@Url.Action("Index", "Product")'"><i class="btn-label glyphicon glyphicon-plus"></i>View List</button>
+                                    <h3 class="card-title"></h3>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row ">
+                                        <div class="col-md-10 mx-5 my-2">
+                                            <b> Name</b>
+                                            @Html.TextBoxFor(m => m.name, new { @class = "form-control input-lg", required = "required" })
+                                        </div>
+                                        <div class="col-md-10 mx-5 my-3">
+                                            <b>Sub Category</b>
+                                            @Html.DropDownListFor(m => m.subcategoryid, ViewBag.SubCategoryList as SelectList, "Select SubCategory", new { @class = "form-control fs-4" })
+                                        </div>
+                                        <br />
+                                        <div class="col-md-10 mx-5 my-3">
+                                            <b>Price </b>
+                                            @Html.TextBoxFor(m => m.price, new { @class = "form-control input-lg", required = "required" })
+                                        </div>
+                                        <br />
+                                        <div class="col-md-10 mx-5 my-3">
+                                            <b>Stock </b>
+                                            @Html.TextBoxFor(m => m.stocklevel, new { @class = "form-control input-lg", required = "required" })
+                                        </div>
+                                        <br />
+                                        <div class="col-md-10 mx-5 my-3">
+                                            <b>Description</b>
+                                            @Html.TextBoxFor(m => m.description, new { @class = "form-control input-lg", required = "required" })
+                                        </div>
+                                        <br />
+                                        <div class="col-md-10 mx-5 my-3">
+                                            <b>Image</b>
+                                            @Html.TextBoxFor(m => m.imgFile, new { @class = "form-control fs-4", Type = "file", name = "imgFile1" })
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-sm-3 mx-5 my-3">
+
+                                            <button type="submit" class="btn btn-outline-success my-2 "><i class="fas fa-save"></i> Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+
+
+    </div>
+}

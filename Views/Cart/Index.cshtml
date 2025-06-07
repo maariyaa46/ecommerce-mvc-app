@@ -1,0 +1,247 @@
+﻿@model IEnumerable<FinalProject.Models.OrderDetail>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+   
+}
+
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Cart</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active">Cart</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-box-main">
+    @using (Html.BeginForm("ProcedToCheckout", "Cart", FormMethod.Post))
+    {
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="table-main table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Session["user"] != null)
+                            {
+                                int i = 0;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        @Html.Hidden("shcartID-" + i + "", item.productid)
+                                        <td class="thumbnail-img">
+                                            <a href="#">
+                                                <img class="img-fluid" src="@Url.Content(item.Product.path)" alt="" />
+                                            </a>
+                                        </td>
+                                        <td class="name-pr">
+                                            <a href="#">
+                                                @item.Product.name
+                                            </a>
+                                        </td>
+                                        <td id="price-@(i)" class="price-pr">
+                                            <p>@item.price</p>
+                                        </td>
+                                        <td class="quantity-box"><input id="itemQty-@(i)" name="Qty-@(i)" type="number" size="2" value="@item.quantity" min="0" step="1" class="c-input-text qty text"></td>
+
+                                        <td class="total-pr">
+                                            <strong id="Amount-@(i)">
+                                                @item.total
+
+                                            </strong>
+                                        </td>
+                                        <td class="remove-pr">
+                                            <a href="@Url.Action("Remove", "Cart", new { id = item.productid })">
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                            else
+                            {
+                                <text>Please login to view your cart</text>}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+<div class="row my-5">
+            <div class="col-lg-6 col-sm-6">
+                <div class="coupon-box">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control" placeholder="Enter your coupon code" aria-label="Coupon code" type="text" name="voucherCode" id="voucherCode">
+                        <div class="input-group-append">
+                            <button class="btn btn-theme"> Coupon </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-lg-8 col-sm-12"></div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="order-box">
+                    <h3>Order summary</h3>
+                    <div class="d-flex">
+                        <h4>Sub Total</h4>
+                        <div id="subTotal" class="ml-auto font-weight-bold"> </div>
+                    </div>
+
+                    <hr class="my-1">
+                    <div class="d-flex">
+                        <h4>Coupon Discount</h4>
+                        <div id ="discount" class="ml-auto font-weight-bold">  </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <h4>Shipping Cost</h4>
+                        <div class="ml-auto font-weight-bold"> Free </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex gr-total">
+                        <h5>Total Amount</h5>
+                        <div id="totalAmount" class="ml-auto h5">  </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-12 d-flex shopping-box"><button type="submit" class="ml-auto btn hvr-hover" style="background-color:lightcyan">Proced to Checkout</button></div>
+        </div>
+
+
+    </div>}
+</div>
+<footer>
+    <div class="footer-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-widget">
+                        <img src="~/Content/images/logo2.png" alt="Cool green dress with red bell" class="img-responsive" width="260" height="90">
+                        <p>Ali Electronics deal original reliable products only with best competitive prices and provide best after sales services. </p>
+                        <ul>
+                            <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link">
+                        <h4>Information</h4>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Customer Service</a></li>
+                            <li><a href="#">Our Sitemap</a></li>
+                            <li><a href="#">Terms &amp; Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Delivery Information</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link-contact">
+                        <h4>Contact Us</h4>
+                        <ul>
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>Address: Hussain Agahi Rd, Qila Kuhna Qasim Bagh, Multan, Punjab </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <i class="fa-phone"></i> Phone: 0301-2221355<br>
+                                    061-4510355<br>
+                                    061-45163556<br>
+                                </p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript">
+    $(function () {
+        $(':input[type="number"]').change(function () {
+
+            var index = $(this).attr('id').split("-")[1];
+
+            var itemPriceEle = document.getElementById('price-' + index + '');
+            var itemQty = $('#itemQty-' + index + '').val();
+            var amountEle = document.getElementById('Amount-' + index + '');
+
+            var amount = itemQty * parseInt(itemPriceEle.innerText);
+
+            amountEle.innerText = amount;
+
+            CartsTotal();
+
+
+
+        });
+        CartsTotal();
+    });
+    function CartsTotal() {
+        var subAmount = 0;
+        var i = 0;
+        for (var i = 0; i < 5;) {
+            if (parseInt($('#Amount-' + i + '').text()) > 0) {
+                subAmount = subAmount + parseInt($('#Amount-' + i + '').text());
+                i++;
+            } else {
+                break;
+            }
+        }
+        var discount = parseInt($('#discount').text()); // Get the discount value
+        var subTotalEle = document.getElementById('subTotal');
+        subTotalEle.innerText = subAmount;
+
+        var totalAmount = subAmount;
+        if (discount != null && discount > 0) { // Check if discount is not null and greater than 0
+            totalAmount = subAmount - discount; // Subtract discount from subtotal only if discount is not null
+        }
+        var TotalAmountEle = document.getElementById('totalAmount');
+        TotalAmountEle.innerText = totalAmount;
+    }
+
+    function TotalAmount() {
+        for (var i = 0; i < 5; i++) {
+            var itemPriceEle = document.getElementById('price-' + i + '');
+            var itemQty = $('##itemQty-' + i + '').val();
+            var amountEle = document.getElementById('Amount-' + i + '');
+
+            var amount = itemQty * parseInt(itemPriceEle.innerText);
+
+            amountEle.innerText = amount;
+        }
+    }
+    </script>

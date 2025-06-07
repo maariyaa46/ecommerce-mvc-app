@@ -1,0 +1,113 @@
+﻿@using FinalProject.Models;
+@model Tuple<Order, IEnumerable<OrderDetail>>
+@{ ViewBag.Title = "Order";
+    ViewBag.SubTitle = "Details";
+    Layout = "~/Views/Shared/_Layout2.cshtml"; }
+<div class="wrapper">
+    <div class="content-wrapper">
+        <div class="card">
+            <div class="card-body">
+                <div class="container mb-5 mt-3">
+                    <div class="row d-flex align-items-baseline">
+                        <div class="col-xl-9">
+                            <p style="color: #7e8d9f;font-size: 20px;">Invoice >> <strong>ID: @Html.DisplayFor(model => model.Item1.id)</strong></p>
+                        </div>
+                        <div class="col-xl-3 float-end">
+                            <button id="printButton" class="btn btn-info pull-right" onClick="printpage()"><i class="fa fa-print"></i> Print</button>
+                            @Html.ActionLink("Back to List", "Index", "Order", new { @class = "btn btn-success" })
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <img src="~/Content/images/O.png" class="brand-image img-circle elevation-3" style="opacity: .8" width="40" height="45">
+                                <p class="pt-0">Ali Electronics</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <ul class="list-unstyled">
+                                    <li class="text-lg">To: <span style="font-size: 17px;">@Html.DisplayFor(model => model.Item1.User.name)</span></li>
+                                    <li class="text-bold"><span style="font-size: 17px;">@Html.DisplayFor(model => model.Item1.User.email)</span></li>
+
+                                    <li class="text-bold"> <span style="font-size: 17px;">@Html.DisplayFor(model => model.Item1.Shipping.address)</span></li>
+                                    <li class="text-bold"><i class="fas fa-phone"></i> <span style="font-size: 17px;">@Html.DisplayFor(model => model.Item1.Shipping.contactnum)</span></li>
+                                </ul>
+                            </div>
+                            <div class="col-xl-4">
+
+                                <ul class="list-unstyled">
+
+                                    <li class="text-muted">
+                                        <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Creation Date: @Html.DisplayFor(model => model.Item1.date) </span>
+                                    </li>
+                                    <li class="text-muted">
+                                        <span class="me-1 fw-bold">Status: @Html.DisplayFor(model => model.Item1.Payment.PaymentType.type)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="row my-2 mx-1 justify-content-center">
+                            <h1>Order Summary</h1>
+                            <table class="table table-striped table-borderless">
+                                <thead style="background-color:#84B0CA ;" class="text-white">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Qty</th>
+                                        <th scope="col"> Price</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{int i = 0;}
+                                    @foreach (var item in Model.Item2)
+                                    {
+                                        i++;
+                        <tr>
+                            <td>@i.ToString()</td>
+                            <td>@item.Product.name</td>
+                            <td>@item.quantity</td>
+                            <td>@item.price</td>
+                            <td>@item.total</td>
+                        </tr>
+}
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xl-3">
+                                <ul class="list-unstyled">
+                                    <li class="text-muted ms-3"><span class="text-black me-4">Shipping : </span> <span style="font-size: 20px;">Free</span></li>
+
+                                </ul>
+                                <p class="text-black float-start">
+                                    <span class="text-black me-3"> Total Amount: </span><span style="font-size: 20px;">@ViewBag.TAmount</span>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function printpage() {
+        document.getElementById('printButton').style.visibility = "hidden";
+        window.print();
+        location.reload();
+    }</script>

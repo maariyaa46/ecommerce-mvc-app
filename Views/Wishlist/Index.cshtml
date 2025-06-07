@@ -1,0 +1,138 @@
+﻿@model IEnumerable<FinalProject.Models.Wishlist>
+    @{ ViewBag.Title = "Wishlist";
+       Layout = "~/Views/Shared/_Layout2.cshtml"; }
+
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Wishlist</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active">Wishlist</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wishlist-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Images</th>
+                                    <th>Product Name</th>
+                                    <th>Unit Price </th>
+                                    <th>Stock</th>
+                                    <th>Product</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Session["user"] != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="thumbnail-img">
+                                                <a href="#">
+                                                    <img class="img-fluid" src="@Url.Content(item.Product.path)" alt="" />
+                                                </a>
+                                            </td>
+                                            <td class="name-pr">
+                                                <a href="#">
+                                                    @item.Product.name
+                                                </a>
+                                            </td>
+                                            <td class="price-pr">
+                                                <p>@item.Product.price</p>
+                                            </td>
+
+                                            <td class="quantity-box">
+                                                @if (item.Product.stocklevel > 0)
+                                                {
+                                                    <text>In Stock (@item.Product.stocklevel)</text> }
+                                                else
+                                                { <text>Out of Stock (@item.Product.stocklevel)</text>}
+                                            </td>
+
+                                            <td class="add-pr">
+                                                <a class="btn hvr-hover" href="@Url.Action("AddToCart", "WishList", new { id=item.id})">Add to Cart</a>
+                                            </td>
+                                            <td class="remove-pr">
+                                                <a href="@Url.Action("Remove", "WishList", new { id=item.id})">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <text>Please login to view wishlist</text>}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-widget">
+                            <img src="~/Content/images/logo2.png" alt="Cool green dress with red bell" class="img-responsive" width="260" height="90">
+                            <p>Ali Electronics deal original reliable products only with best competitive prices and provide best after sales services. </p>
+                            <ul>
+                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-link">
+                            <h4>Information</h4>
+                            <ul>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Customer Service</a></li>
+                                <li><a href="#">Our Sitemap</a></li>
+                                <li><a href="#">Terms &amp; Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Delivery Information</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-link-contact">
+                            <h4>Contact Us</h4>
+                            <ul>
+                                <li>
+                                    <p><i class="fas fa-map-marker-alt"></i>Address: Hussain Agahi Rd, Qila Kuhna Qasim Bagh, Multan, Punjab </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <i class="fa-phone"></i> Phone: 0301-2221355<br>
+                                        061-4510355<br>
+                                        061-45163556<br>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>

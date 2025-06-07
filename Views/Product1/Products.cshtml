@@ -1,0 +1,201 @@
+﻿@using PagedList;
+
+@model IPagedList<FinalProject.Models.Product>
+@{ ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout2.cshtml"; }
+ 
+@if (!string.IsNullOrEmpty(Request.QueryString["categoryName"]))
+{
+
+<div class="all-title-box">
+    <img src="~/Content/img/fashion/fashion-header-bg-8.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>@(Request.QueryString["categoryName"])</h2>
+                <ul class="breadcrumb">
+                    <li><a href="@Url.Action("Index","HomePage")">Home</a></li>
+                    <li class="active">@(Request.QueryString["categoryName"])</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>}
+ 
+<div class="shop-box-inner">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left ">
+
+         <div class="product-categori">
+        <div class="filter-sidebar-left ">
+            <div class="title-left">
+                <h3>Categories</h3>
+            </div>
+            <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+                <div class="list-group text-muted">
+                    @foreach (var item in ViewBag.SubCategories)
+                    {
+                   <a href="@Url.Action("GetProductsByCategory", new { categoryName = item })">@item</a>}
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-price-left">
+            <div class="title-left">
+                <h3>Price</h3>
+            </div>
+            <div class="price-box-slider">
+
+                @using (Html.BeginForm("FilterByPrice", "Product1", FormMethod.Get))
+                {
+
+                     <input type="range" min="0" max="100" onchange="updateMinInput(this.value);"> <br />
+                    <input type="range" min="0" max="100" onchange="updateMaxInput(this.value);"> <br />
+                     <input type="number" name="minPrice" id="minValue" min="0" maxlength="6" max="999999" value="00" size="6">
+                      <input type="number" name="maxPrice" id="maxValue" min="0" maxlength="6" max="999999" value="00" size="6"> <br /><br />
+                     <button class="aa-filter-btn" type="submit" style="background-color:dodgerblue">Filter</button>}
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+    <div class="right-product-box">
+
+        <div class="product-item-filter row">
+
+<div class="col-12 col-sm-8 text-center text-sm-left">
+
+        @using (Html.BeginForm("Products", "Product1", FormMethod.Post, new { @id = "ssForm", categoryName = Request.QueryString["categoryName"] }))
+        {
+        <div class="toolbar-sorter-right">
+            <span>Sort by </span>
+            <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                <option data-display="Select">Nothing</option>
+                <option value="1">Popularity</option>
+                <option value="2">High Price → High Price</option>
+                <option value="3">Low Price → High Price</option>
+                <option value="4">Best Selling</option>
+            </select>
+        </div>
+        }
+
+
+
+    </div>
+    <div class="col-12 col-sm-4 text-center text-sm-right">
+        <ul class="nav nav-tabs ml-auto">
+            <li>
+                <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i class="fa fa-th"></i> </a>
+            </li>
+            <li>
+                <a class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+        <div class="aa-product-catg-body">
+
+            <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
+                @if (Model != null && Model.Count > 0)
+                {
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="products-single fix">
+                                    @Html.Partial("_Product", item)
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <h3>Sorry! There are no products available.</h3>
+                }
+            </div>
+
+
+                   </div>
+                </div>
+            </div>
+       </div>
+   </div>
+</div>
+
+
+
+
+<footer>
+           <div class="footer-main">
+             <div class="container">
+                <div class="row">
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                     <div class="footer-widget">
+                        <img src="~/Content/images/logo2.png" alt="Cool green dress with red bell" class="img-responsive" width="260" height="90">
+                           <p>Ali Electronics deal original reliable products only with best competitive prices and provide best after sales services. </p>
+                              <ul>
+                                 <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                 <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                 <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                                 <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                                 <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                 <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                  <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12 col-sm-12">
+                                        <div class="footer-link">
+                                            <h4>Information</h4>
+                                            <ul>
+                                                <li><a href="#">About Us</a></li>
+                                                <li><a href="#">Customer Service</a></li>
+                                                <li><a href="#">Our Sitemap</a></li>
+                                                <li><a href="#">Terms &amp; Conditions</a></li>
+                                                <li><a href="#">Privacy Policy</a></li>
+                                                <li><a href="#">Delivery Information</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12 col-sm-12">
+                                        <div class="footer-link-contact">
+                                            <h4>Contact Us</h4>
+                                            <ul>
+                                                <li>
+                                                    <p><i class="fas fa-map-marker-alt"></i>Address: Hussain Agahi Rd, Qila Kuhna Qasim Bagh, Multan, Punjab </p>
+                                                </li>
+                                                <li>
+                                                    <p>
+                                                        <i class="fa-phone"></i> Phone: 0301-2221355<br>
+                                                        061-4510355<br>
+                                                        061-45163556<br>
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+
+ <script type="text/javascript">
+    function updateMinInput(val) {
+         document.getElementById('minValue').value = 00;
+         document.getElementById('minValue').value = val * 10;
+     }
+     function updateMaxInput(val) {
+         document.getElementById('maxValue').value = 00;
+         document.getElementById('maxValue').value = val * 100;
+     }</script>
